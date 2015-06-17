@@ -1,21 +1,20 @@
 var http = require('http');
+var https = require('https');
 
 
 var flags = require('flags');
 
 flags.defineString('url', 'www.google.com', 'URL of page to scan');
-flags.defineStringList('targets', ['form', 'object']);
+flags.defineStringList('targets', ['form', 'object'], 'the HTML tags you want to search for');
 flags.parse();
 
-console.log(flags.get('url'));
-var result = /^(http\:\/\/)? .+/i.exec(flags.get('url'))
-console.log(result);
-
+var url = flags.get('url');
+url = /(http:\/\/)?((?:www\.)?[^\/]+)(\/.+)?/.exec(url);
 
 var options = {
-  host : 'www.blender3d.org',
+  host : url[2],
   port : 80,
-  path : '/e-shop/product_info_n.php?products_id=164'
+  path : url[3]
 }
 
 var page = "";
@@ -93,7 +92,7 @@ var req = http.request(options, function (res) {
   });
 
   res.on('end', function () {
-    console.log('done');
+
   });
 
 }).end();
