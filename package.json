@@ -1,0 +1,22 @@
+{
+  "name": "xss",
+  "version": "0.0.0",
+  "description": "A tool for scanning and performing xss with node.js",
+  "main": "scan.js",
+  "dependencies": {
+    "flags": "^0.1.3",
+    "phantomjs": "^1.9.17"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cross-site scripting",
+    "xss",
+    "security",
+    "hack"
+  ],
+  "author": "Daniel Pendergast",
+  "license": "ISC"
+}
