@@ -1,7 +1,7 @@
 {
   "name": "xss",
   "version": "0.0.0",
-  "description": "A tool for scanning and performing xss with node.js",
+  "description": "A tool for scanning webpages for possible XSS attacks",
   "main": "scan.js",
   "dependencies": {
     "flags": "^0.1.3",
