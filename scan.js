@@ -136,13 +136,3 @@ function scrapeForms ($) {
   return findings
 
 }
-
-// Step 1: scan entire site for used query strings
-//  a: scrape HTML for anchors
-//    i: find hrefs with query strings
-//    ii: use all links for crawling and scraping those pages
-//  b: scrape HTML for forms
-//    i: find inputs in GET forms
-//    ii: find query strings other forms 'action'
-//  c: scrape HTML for inputs without forms
-//    i: run page in phantomjs and test these inputs for XHRs and check the resulting query strings
