@@ -38,7 +38,10 @@ var req = http.request(options, function (res) {
       console.log('Possible reflective XSS at %s', anchors[i].url)
     }
 
-    scrapeForms($)
+    var forms = scrapeForms($)
+    for (var i = 0; i < forms.length; i++) {
+      console.log('%s %s with inputs', forms[i].method, forms[i].url, forms[i].params.join(', '))
+    }
   })
 
 }).end()
@@ -88,7 +91,49 @@ function scrapeAnchors ($) {
 
 }
 
+var inputsInsideOfForms = []
 
+function scrapeForms ($) {
+
+  var pageForms = []
+
+  var findings = []
+
+  $('form').each(function () {
+    var form = $(this)
+
+
+
+    var method = form.attr('method').toUpperCase()
+    var action = form.attr('action')
+    var actionQuery = url.parse(action, true, true).query
+
+    var formFindings = {
+      method : method,
+      url : action,
+      params : []
+    }
+
+    form.find('input').each(function () {
+
+      var inputName = $(this).attr('name')
+
+      if (inputName !== undefined)
+        formFindings.params.push(inputName)
+
+      inputsInsideOfForms.push($(this))
+    })
+
+    if (Object.keys(actionQuery).length != 0) {
+
+    }
+
+
+    findings.push(formFindings)
+
+  })
+
+  return findings
 
 }
 
