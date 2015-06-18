@@ -1,12 +1,12 @@
-var flags = require('flags');
-var url = require('url');
+var flags = require('flags')
+var url = require('url')
 
-flags.defineString('url', 'www.google.com', 'URL of page to scan');
-flags.defineStringList('targets', ['form', 'object'], 'the HTML tags you want to search for');
-flags.parse();
+flags.defineString('url', 'www.google.com', 'URL of page to scan')
+flags.defineStringList('targets', ['form', 'object'], 'the HTML tags you want to search for')
+flags.parse()
 
-var targetURL = flags.get('url');
-targetURL = /(http:\/\/)?((?:www\.)?[^\/]+)(\/.+)?/.exec(targetURL);
+var targetURL = flags.get('url')
+targetURL = /(http:\/\/)?((?:www\.)?[^\/]+)(\/.+)?/.exec(targetURL)
 
 var options = {
   host : targetURL[2],
@@ -14,50 +14,50 @@ var options = {
   path : targetURL[3]
 }
 
-var http = require('http');
+var http = require('http')
 
-var crawlQueue = [];
+var crawlQueue = []
 
-var cheerio = require('cheerio');
+var cheerio = require('cheerio')
 
 var req = http.request(options, function (res) {
 
-  res.setEncoding('utf8');
+  res.setEncoding('utf8')
 
-  var page = '';
+  var page = ''
 
   res.on('data', function (chunk) {
-    page += chunk;
-  });
+    page += chunk
+  })
 
   res.on('end', function () {
-    $ = cheerio.load(page);
+    $ = cheerio.load(page)
 
     var anchors = scrapeAnchors($)
     for (var i = 0; i < anchors.length; i++) {
       console.log('Possible reflective XSS at %s', anchors[i].url)
     }
 
-    // scrapeForms($);
-  });
+    scrapeForms($)
+  })
 
-}).end();
+}).end()
 
 function scrapeAnchors ($) {
 
-  var hrefsWithQuery = [];
+  var hrefsWithQuery = []
 
   $('a').each(function () {
 
-    var href = $(this).attr('href');
+    var href = $(this).attr('href')
 
     if (href !== undefined) {
 
-      var urlParsed = url.parse(href, true, true);
+      var urlParsed = url.parse(href, true, true)
 
-      var queries = urlParsed.query;
+      var queries = urlParsed.query
 
-      var len = Object.keys(queries).length;
+      var len = Object.keys(queries).length
 
       if (len > 0) {
 
@@ -70,21 +70,21 @@ function scrapeAnchors ($) {
           hrefWithQuery.keys[i] = {
             name : Object.keys(queries)[i],
             possibleType : ''
-          };
+          }
         }
 
-        hrefsWithQuery.push(hrefWithQuery);
+        hrefsWithQuery.push(hrefWithQuery)
 
       }
 
     }
 
     if (href != '#' && href !== undefined)
-      crawlQueue.push(href);
+      crawlQueue.push(href)
 
-  });
+  })
 
-  return hrefsWithQuery;
+  return hrefsWithQuery
 
 }
 
