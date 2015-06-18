@@ -16,3 +16,9 @@ The main idea is to detect all input vectors seen across the entire site. This i
   2. Search form 'action' for query strings. An action may contain query strings such as `/signup?page=home` even if it's not a GET request.
 3. Scrape inputs that don't have forms. These will probably use XHRs (XMLHttpRequests; aka: AJAX)!
   1. Run page in phantomjs and test these inputs for outgoing XHRs and store the resulting query strings and/or body parameters.
+
+XSS Bypasses
+=================
+Some ideas of what to XSS tests to run.
+
+ - [UTF-7 encoding attack](http://stackoverflow.com/a/29445514/546476)
