@@ -19,6 +19,6 @@ The main idea is to detect all input vectors seen across the entire site. This i
 
 XSS Bypasses
 =================
-Some ideas of what to XSS tests to run.
+Some ideas of what XSS tests to run.
 
  - [UTF-7 encoding attack](http://stackoverflow.com/a/29445514/546476)
