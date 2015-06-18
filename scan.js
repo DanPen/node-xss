@@ -35,13 +35,13 @@ var req = http.request(options, function (res) {
 
     var anchors = scrapeAnchors($)
     for (var i = 0; i < anchors.length; i++) {
-      console.log("<a> found GET request %s with parameters:", anchors[i].url)
+      console.log("<a> GET %s with parameters:", anchors[i].url)
 
       console.log() // new line
 
       for (var p = 0; p < anchors[i].parameters.length; p++) {
 
-        console.log("\t%s\t%s", anchors[i].parameters[p].key, anchors[i].parameters[p].knownValues)
+        console.log("\t%s:\t%s", anchors[i].parameters[p].key, anchors[i].parameters[p].knownValues)
 
       }
 
@@ -50,7 +50,16 @@ var req = http.request(options, function (res) {
 
     var forms = scrapeForms($)
     for (var i = 0; i < forms.length; i++) {
-      console.log('%s %s with inputs', forms[i].method, forms[i].url, forms[i].params.join(', '))
+      console.log('<form> %s %s with inputs:', forms[i].method, forms[i].url)
+
+      console.log() // new line
+
+      for (var p = 0; p < forms[i].params.length; p++) {
+        console.log('\t%s', forms[i].params[p])
+      }
+
+      console.log() // new line
+
     }
   })
 
